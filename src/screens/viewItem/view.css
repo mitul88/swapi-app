@@ -1,0 +1,35 @@
+.view {
+    min-height: calc(100vh - 80px);
+    padding: 0px 200px 0px 200px;
+}
+
+
+.container {
+    display: flex;
+}
+
+.left, .right {
+    flex: 1
+}
+
+.linkBtn {
+    border: 1px solid #0D4C92;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-weight: 500;
+    color: #0D4C92;
+    background-color: #fff;
+    cursor: pointer;
+    transition: .6s;
+}
+
+.linkBtn:hover {
+    background-color: #0D4C92;
+    color:#fff
+}
+
+@media only screen and (max-width: 768px) {
+    .view {
+        padding: 0px
+    }
+  }
