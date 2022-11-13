@@ -4,9 +4,9 @@
 
 ## Dependencies
 
-React material UI used for Typography and pagination /n
-Axios used to fetch data from service /n
+### React material UI used for Typography and pagination 
+### Axios used to fetch data from service 
 
 ## Info
 
-The Main component is the primaryy route /n
+### The Main component is the primaryy route 
