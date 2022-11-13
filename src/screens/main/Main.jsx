@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import "./main.css"
-import axios from 'axios'
 import { Container, Typography, Box, Pagination } from '@mui/material'
 import Characters from '../../component/characters/Characters'
+import api from '../../api/config'
 
 
 
@@ -15,7 +15,7 @@ const Main = () => {
 
   const fetchCharacters = () => {
     setLoading(true)
-    axios.get(`http://localhost:3001/api/?page=${page}`)
+    api.get(`api/?page=${page}`)
     .then(response => {
       setData(response.data)
       if(response.status === 200) setLoading(false)

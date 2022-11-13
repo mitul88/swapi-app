@@ -1,5 +1,5 @@
 import { List, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material'
-import axios from 'axios'
+import api from '../../api/config'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import "./view.css"
@@ -24,7 +24,7 @@ const View = () => {
   useEffect(()=> {
     const fetchCharacter = () => {
       setLoading(true)
-      axios.get(`http://localhost:3001/api/view/${id}`)
+      api.get(`api/view/${id}`)
       .then(response => {
         setData(response.data)
         if(response.status === 200) setLoading(false)
@@ -38,7 +38,7 @@ const View = () => {
               // getting film names from api call
               let filmsArr = []
               filmsId.forEach(id=> {
-                axios.get(`http://localhost:3001/api/getFilmNames/${id}`)
+                api.get(`api/getFilmNames/${id}`)
                       .then(res => filmsArr.push(res.data))
                       .catch(err=> {
                         console.log("Films err: ", err)
@@ -48,7 +48,7 @@ const View = () => {
               const speciesUrl = response.data.species[0]
               if(speciesUrl !== undefined) {
                 const speciesId = speciesUrl.match(/\d+/)[0]
-                axios.get(`http://localhost:3001/api/getSpecies/${speciesId}`)
+                api.get(`api/getSpecies/${speciesId}`)
                     .then(res =>setSpecies(res.data.name))
                     .catch(err=> {
                       console.log("Species err: ", err)
@@ -56,7 +56,7 @@ const View = () => {
               }
               const homeworldUrl = response.data.homeworld
               const homeworldId = homeworldUrl.match(/\d+/)[0]
-                axios.get(`http://localhost:3001/api/getHomeworld/${homeworldId}`)
+                api.get(`api/getHomeworld/${homeworldId}`)
                     .then(res => setHomeworld(res.data.name))
                     .catch(err=> {
                       console.log("Homeworld err: ", err)

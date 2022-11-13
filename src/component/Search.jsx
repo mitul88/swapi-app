@@ -1,6 +1,6 @@
-import axios from 'axios'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import api from '../api/config'
 
 const searchContainer = {
     padding: "10px",
@@ -30,7 +30,7 @@ const Search = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post(`http://localhost:3001/api/`, searchValues)
+    api.post(`api/search`, searchValues)
     .then(response => {
       localStorage.setItem("data",JSON.stringify(response.data.results[0]))
     })
