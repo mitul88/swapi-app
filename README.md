@@ -4,6 +4,7 @@
 ### SWAPI service link is below
 https://github.com/mitul88/swapi-app
 ## This is a simple project. Which only fetch data from service. User can view all search particular character
+### before running please install the npm packages byt typing "npm install" in the command prompt
 
 ## Dependencies
 
