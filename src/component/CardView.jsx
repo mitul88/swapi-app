@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 
 const card = {
-  width: "200px",
+  width: "300px",
   height: "250px",
   borderRadius: "10px",
   border : "1px solid #0D4C92",
