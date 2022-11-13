@@ -3,20 +3,19 @@ import Topbar from './component/Topbar';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Main from './screens/main/Main';
 import View from './screens/viewItem/View';
-import { CharacterProvider } from './utils/CharacterContext';
+import SearchItemView from './screens/search/SearchItemView';
 
 
 function App() {
   return (
-    <CharacterProvider>
+    <Router>
       <Topbar />
-        <Router>
-          <Routes>
-            <Route exact path='/' element={<Main />} />
-            <Route exact path='/view/:id' element={<View />} />
-          </Routes>
-        </Router>
-    </CharacterProvider>
+        <Routes>
+          <Route exact path='/' element={<Main />} />
+          <Route exact path='/search' element={<SearchItemView />} />
+          <Route exact path='/view/:id' element={<View />} />
+        </Routes>
+    </Router> 
   );
 }
 

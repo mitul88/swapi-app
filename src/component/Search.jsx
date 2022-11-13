@@ -1,4 +1,6 @@
+import axios from 'axios'
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const searchContainer = {
     padding: "10px",
@@ -18,6 +20,7 @@ const btn = {
 const Search = () => {
 
   const [searchValues, setSearchValues] = useState("")
+  const navigate = useNavigate()
 
   const handleChange = e => {
     setSearchValues({
@@ -25,11 +28,22 @@ const Search = () => {
     })
   }
 
-  console.log(searchValues)
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios.post(`http://localhost:3001/api/`, searchValues)
+    .then(response => {
+      localStorage.setItem("data",JSON.stringify(response.data.results[0]))
+    })
+    .then(()=>navigate('/search'))
+    .catch(err=> {
+      console.log(err)
+    })
+
+  }
 
   return (
     <div style={searchContainer}>
-        <form>
+        <form onSubmit={handleSubmit}>
             <div style={formControl}> 
                 <input 
                   type="text" 
