@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const searchContainer = {
     padding: "10px",
@@ -16,6 +16,17 @@ const btn = {
 }
 
 const Search = () => {
+
+  const [searchValues, setSearchValues] = useState("")
+
+  const handleChange = e => {
+    setSearchValues({
+      [e.target.name]: e.target.value
+    })
+  }
+
+  console.log(searchValues)
+
   return (
     <div style={searchContainer}>
         <form>
@@ -24,6 +35,7 @@ const Search = () => {
                   type="text" 
                   name="search" 
                   placeholder='Character name' 
+                  onChange={handleChange}
                   style={{
                     padding : "10px",
                     width: "300px"
