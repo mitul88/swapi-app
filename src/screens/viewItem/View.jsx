@@ -1,19 +1,26 @@
-import { Typography } from '@mui/material'
+import { List, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import "./view.css"
 
 
 const View = () => {
   const [data, setData] = useState([])
+  const[filmsId, setFilmsId] = useState([])
   const [loading, setLoading] = useState(false)
   const [species, setSpecies] = useState("N/A")
   const [homeworld, setHomeworld] = useState("N/A")
 
   const params = useParams()
   const id = params.id
+  const navigate = useNavigate()
 
+  const homeDir = () => {
+    navigate("/")
+  }
+  
+  let filmIdArr = []
   useEffect(()=> {
     const fetchCharacter = () => {
       setLoading(true)
@@ -21,6 +28,23 @@ const View = () => {
       .then(response => {
         setData(response.data)
         if(response.status === 200) setLoading(false)
+
+              // getting film id
+              response.data.films.forEach(element=> {
+                const filmId = element.match(/\d+/)[0]
+                filmIdArr.push(filmId)
+              })
+
+              // getting film names from api call
+              let filmsArr = []
+              filmsId.forEach(id=> {
+                axios.get(`http://localhost:3001/api/getFilmNames/${id}`)
+                      .then(res => filmsArr.push(res.data))
+                      .catch(err=> {
+                        console.log("Films err: ", err)
+                      })
+              })
+
               const speciesUrl = response.data.species[0]
               if(speciesUrl !== undefined) {
                 const speciesId = speciesUrl.match(/\d+/)[0]
@@ -32,20 +56,22 @@ const View = () => {
               }
               const homeworldUrl = response.data.homeworld
               const homeworldId = homeworldUrl.match(/\d+/)[0]
-              console.log(homeworldId)
                 axios.get(`http://localhost:3001/api/getHomeworld/${homeworldId}`)
                     .then(res => setHomeworld(res.data.name))
                     .catch(err=> {
                       console.log("Homeworld err: ", err)
                     })
-      }).catch(err=> {
+      }).then(()=>{
+        setFilmsId(filmIdArr)
+      })
+      .catch(err=> {
         console.log("Character info err: ", err)
       })
     }
     fetchCharacter()
   }, [])
-  
-  console.log(species)
+
+
   if(loading) {
     return <h2 style={{width:'300px', padding:'100px', margin:'auto'}}>Loading....</h2>
   }
@@ -67,13 +93,35 @@ const View = () => {
             </div>
             <div className='right'>
                 <Typography variant='h4' sx={{marginBottom: '30px'}}>Movies Appeared</Typography>
+                <div>
+                  
+                </div>
             </div>
         </div>
         <div style={{width:'100%', display: 'flex', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
-          <button className='linkBtn'>Go Back</button>
+          <button className='linkBtn' onClick={()=>homeDir()}>Go Back</button>
         </div>
     </div>
   )
 }
 
 export default View
+
+// {
+//   films !==[] ?
+//   (
+//     <List>
+//       {films.map((filmName, index)=> (
+//           <ListItem disablePadding key={index}>
+//           <ListItemButton>
+//             <ListItemText>
+//             {filmName.data}
+//             </ListItemText>
+//           </ListItemButton>
+//         </ListItem>
+//       ))}
+//     </List>
+//    )
+//    :
+//    (<h2>Films loading</h2>)
+// }
